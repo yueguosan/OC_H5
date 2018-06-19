@@ -69,7 +69,8 @@
         
         NSLog(@"------>%@  %@",userName,userPass);
         // 登录
-//        NSURL *rul = [NSURL URLWithString:@"http:www"];
+        NSString *urlString = [NSString stringWithFormat:@"https://"];
+        NSURL *url = [NSURL URLWithString:urlString];
     };
     
 }
