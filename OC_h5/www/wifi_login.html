@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1" />
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="css/css.css"/>
+</head>
+<body>
+<header>
+    <a href="javascript:history.go(-1);" class="left"></a>
+    <div class="tit">登录</div>
+</header>
+<div class="fxBox pb50">
+    <div class="netin_box">
+        <div class="banner"><img src="images/netin.png" alt=""/></div>
+        <p class="netin_ts"></p>
+        <div class="input"><input type="text" id="userName" readonly placeholder="请输入用户名" value=""/></div>
+        <div class="input pr">
+            <input type="password" id="userPass"  placeholder="请输入密码"/>
+            <div class="view">
+                <img class="img1" src="images/eye.png" alt=""/>
+                <img class="img2" src="images/eyev.png" alt=""/>
+            </div>
+        </div>
+        <div class="remember">
+            <p class="">
+                <img class="img1" src="images/xz.png" alt=""/><img class="img2" src="images/xzg.png" alt=""/>记住密码
+            </p>
+        </div>
+    </div>
+    <div class="remove_gad" id="startSetXg">登录</div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script>
+    
+    // 从OC获取用户名
+    GetUserName_h5();
+    
+    $(".remember p").click(function(){
+        $(this).toggleClass("on");
+        //设置cookie,以便于判断下次返回进来时，记住密码的状态
+        if($(this).hasClass("on")){
+            //下次进来时，记住密码状态是：选中
+            localStorage.setItem("remPassState","1");
+        }else{
+            localStorage.setItem("remPassState","0");
+        }
+    });
+
+    //输入框输入时，显示在可视区域，避免被键盘遮挡
+    $(".input input").focus(function(){
+        $(this).parents(".input").addClass("on");
+        var _this = $(this);
+        setTimeout(function(){
+            _this.scrollIntoView();
+        },300)
+    });
+    $(".input input").bind('input propertychange', function() {
+        $(this).parents(".input").removeClass("on");
+        hrefok();
+    });
+
+    //修改密码是否可见
+    $(".view").click(function(){
+        $(this).toggleClass("on");
+        if($(this).hasClass("on")){
+            $(this).siblings("input").attr("type","text");
+        }else{
+            $(this).siblings("input").attr("type","password");
+        }
+    });
+    // 登录
+    $("#startSetXg").click(function(){
+        var remCount = $("#userName").val();
+        var remPass = $("#userPass").val();
+        
+        // 回转参数到OC
+        SetUserInfo("userName="+remCount,"userPass="+remPass);
+    });
+
+    /**
+     * app回调数据：
+     */
+    function WECallBackData(name,data){
+        
+        if(name == "GetUserName"){
+            
+            console.log(name + "--H5---->" + data);
+            $("#userName").val(data);
+            //记住账号密码
+            var cunState = localStorage.getItem("remPassState");
+            if(cunState == 1){
+                var cunCount =localStorage.getItem("remCount");
+                //获取本地保存的的账号密码
+                if(data == cunCount){
+                    //如果账号等于保存的账号，则把保存的账号密码自动写入
+                    $("#userName").val(data);
+                    var cunPass =localStorage.getItem("remPass");
+                    $("#userPass").val(cunPass);
+                    $(".remember p").addClass("on");
+                }else{
+                    $(".remember p").removeClass("on");
+                    localStorage.setItem("remPassState","0");
+                }
+            }else{
+                $(".remember p").removeClass("on");
+                localStorage.setItem("remPassState","0");
+            }
+            hrefok();
+        }
+    }
+
+    function hrefok(){
+        var currCount = $("#userName").val();
+        if(currCount){
+            $(".remove_gad").removeClass("disable");
+        }else{
+            $(".remove_gad").addClass("disable");
+        }
+    }
+
+
+</script>
+</body>
+</html>
