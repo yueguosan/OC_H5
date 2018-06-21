@@ -59,6 +59,7 @@
         NSString *userStr = @"张三和李四";
         
         [self callbackDataWithFunctionName:@"GetUserName" withJSONData:userStr];
+        NSLog(@"11111111------>");
     };
     
     // h5回传用户名和密码
