@@ -70,8 +70,6 @@
         
         NSLog(@"------>%@  %@",userName,userPass);
         // 登录
-        NSLog(@"新的吧");
-        
         NSURL *rul = [NSURL URLWithString:@"https://"];
     };
     
