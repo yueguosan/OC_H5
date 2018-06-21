@@ -68,8 +68,6 @@
         NSString *userPass = dict[@"userPass"];
         
         NSLog(@"------>%@  %@",userName,userPass);
-        // 登录
-        NSLog(@"新的吧");
     };
     
 }
