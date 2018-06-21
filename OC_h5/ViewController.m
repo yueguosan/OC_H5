@@ -69,6 +69,8 @@
         NSString *userPass = dict[@"userPass"];
         
         NSLog(@"------>%@  %@",userName,userPass);
+        
+        NSLog(@"2222");
     };
     
 }
