@@ -69,10 +69,7 @@
         
         NSLog(@"------>%@  %@",userName,userPass);
         // 登录
-        NSString *urlString = [NSString stringWithFormat:@"https://"];
-        NSURL *url = [NSURL URLWithString:urlString];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSLog(@"新的吧");
     };
     
 }
